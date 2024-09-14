@@ -1,7 +1,12 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
 
-const Product = sequelize.define("Product", {
+const Product = sequelize.define("product", {
+  productId: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   productName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -15,7 +20,7 @@ const Product = sequelize.define("Product", {
     allowNull: false,
   },
   productImage: {
-    type: DataTypes.ARRAY(DataTypes.STRING), // Assuming productImage is an array of strings
+    type: DataTypes.JSON, // Using JSON to store array of strings
     allowNull: true,
   },
   description: {
@@ -36,6 +41,7 @@ const Product = sequelize.define("Product", {
   },
 }, {
   timestamps: true,
+  freezeTableName: true,
 });
 
 module.exports = Product;

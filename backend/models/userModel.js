@@ -1,7 +1,12 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
 
-const User = sequelize.define("User", {
+const User = sequelize.define("user", {
+  userId: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -37,6 +42,7 @@ const User = sequelize.define("User", {
   },
 }, {
   timestamps: true,
+  freezeTableName: true,
 });
 
 module.exports = User;

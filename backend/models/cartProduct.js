@@ -2,26 +2,40 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
 
 const AddToCart = sequelize.define(
-  "addToCart",
+  "addtocart",
   {
     productId: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
+      allowNull: false,
+      primaryKey: true,
       references: {
-        model: "products", // name of the target model
-        key: "id", // key in the target model that we're referencing
+        model: "product",
+        key: "productId",
       },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: 1, 
+      },
     },
     userId: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: "user",
+        key: "userId",
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     },
   },
   {
-    timestamps: true,
+    timestamps: true, 
+    freezeTableName: true,
   }
 );
 
