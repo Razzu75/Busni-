@@ -1,9 +1,8 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
-const connectDB = require("./config/db");
+const { connectDB } = require("./config/db"); // Ensure this is the correct path to your Sequelize connection
 const router = require("./routes"); // Ensure this is the correct path to your routes
 
 const app = express();
@@ -18,21 +17,12 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-// Connect to MongoDB
-mongoose
-  .connect(
-    process.env.MONGODB_URI, // Ensure this is defined in your .env file
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.error("Failed to connect to MongoDB", err);
-  });
+// Connect to MySQL
+try {
+  connectDB();
+} catch (error) {
+  console.error("Error connecting to database: ", error);
+}
 
 // Use routes
 app.use("/api", router); // Ensure that router is properly configured

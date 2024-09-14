@@ -1,4 +1,4 @@
-const addToCartModel = require("../../models/cartProduct");
+const CartProduct = require("../../models/cartProduct");
 
 const updateAddToCartProduct = async (req, res) => {
   try {
@@ -21,13 +21,16 @@ const updateAddToCartProduct = async (req, res) => {
       });
     }
 
-    const updateProduct = await addToCartModel.findByIdAndUpdate(
-      addToCartProductId,
+    const updateProduct = await CartProduct.update(
       { quantity: qty },
-      { new: true } // Return the updated document
+      {
+        where: { id: addToCartProductId },
+        returning: true, // Return the updated document
+        plain: true,
+      }
     );
 
-    if (!updateProduct) {
+    if (!updateProduct[1]) {
       return res.status(404).json({
         message: "Product not found",
         error: true,
@@ -37,7 +40,7 @@ const updateAddToCartProduct = async (req, res) => {
 
     res.json({
       message: "Product Updated",
-      data: updateProduct,
+      data: updateProduct[1],
       error: false,
       success: true,
     });

@@ -1,4 +1,4 @@
-const userModel = require("../../models/userModel");
+const User = require("../../models/userModel");
 
 async function updateUser(req, res) {
   try {
@@ -15,7 +15,7 @@ async function updateUser(req, res) {
       ...(phoneno && { phoneno: phoneno }),
     };
 
-    const user = await userModel.findById(sessionUser);
+    const user = await User.findByPk(sessionUser);
 
     console.log("user.role", user.role);
 
@@ -23,12 +23,19 @@ async function updateUser(req, res) {
       throw new Error("Unauthorized to update user");
     }
 
-    const updateUser = await userModel.findByIdAndUpdate(userId, payload, {
-      new: true,
+    const [updated] = await User.update(payload, {
+      where: { id: userId },
+      returning: true,
     });
 
+    if (!updated) {
+      throw new Error("User not found or not updated");
+    }
+
+    const updatedUser = await User.findByPk(userId);
+
     res.json({
-      data: updateUser,
+      data: updatedUser,
       message: "User Updated",
       success: true,
       error: false,

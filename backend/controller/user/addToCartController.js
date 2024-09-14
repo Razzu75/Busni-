@@ -1,20 +1,22 @@
-const addToCartModel = require("../../models/cartProduct");
+const CartProduct = require("../../models/cartProduct");
 
 const addToCartController = async (req, res) => {
   try {
     const { productId } = req?.body;
     const currentUser = req.userId;
 
-    const isProductAvailable = await addToCartModel.findOne({
-      productId,
-      userId: currentUser,
+    const isProductAvailable = await CartProduct.findOne({
+      where: {
+        productId,
+        userId: currentUser,
+      },
     });
 
-    console.log("isProductAvailabl   ", isProductAvailable);
+    console.log("isProductAvailable   ", isProductAvailable);
 
     if (isProductAvailable) {
       return res.json({
-        message: "Already exits in Add to cart",
+        message: "Already exists in Add to cart",
         success: false,
         error: true,
       });
@@ -26,8 +28,7 @@ const addToCartController = async (req, res) => {
       userId: currentUser,
     };
 
-    const newAddToCart = new addToCartModel(payload);
-    const saveProduct = await newAddToCart.save();
+    const saveProduct = await CartProduct.create(payload);
 
     return res.json({
       data: saveProduct,

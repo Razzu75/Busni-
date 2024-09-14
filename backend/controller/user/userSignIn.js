@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const userModel = require("../../models/userModel");
+const User = require("../../models/userModel");
 const jwt = require("jsonwebtoken");
 
 async function userSignInController(req, res) {
@@ -13,7 +13,7 @@ async function userSignInController(req, res) {
       throw new Error("Please provide password");
     }
 
-    const user = await userModel.findOne({ email });
+    const user = await User.findOne({ where: { email } });
 
     if (!user) {
       throw new Error("User not found");
@@ -25,7 +25,7 @@ async function userSignInController(req, res) {
 
     if (checkPassword) {
       const tokenData = {
-        _id: user._id,
+        id: user.id,
         email: user.email,
         phoneno: user.phoneno, // Added phone number to token data
       };

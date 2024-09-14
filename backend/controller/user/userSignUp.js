@@ -1,11 +1,11 @@
-const userModel = require("../../models/userModel");
+const User = require("../../models/userModel");
 const bcrypt = require("bcryptjs");
 
 async function userSignUpController(req, res) {
   try {
     const { email, password, name, area, city, phoneno } = req.body;
 
-    const user = await userModel.findOne({ email });
+    const user = await User.findOne({ where: { email } });
 
     console.log("user", user);
 
@@ -45,8 +45,7 @@ async function userSignUpController(req, res) {
       password: hashPassword,
     };
 
-    const userData = new userModel(payload);
-    const saveUser = await userData.save();
+    const saveUser = await User.create(payload);
 
     res.status(201).json({
       data: saveUser,

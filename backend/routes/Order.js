@@ -1,7 +1,7 @@
 // routes/order.js
 const express = require("express");
 const router = express.Router();
-const Order = require("./models/Order");
+const Order = require("../models/order");
 
 router.post("/api/create", async (req, res) => {
   try {
@@ -11,15 +11,13 @@ router.post("/api/create", async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid data" });
     }
 
-    const newOrder = new Order({
+    const newOrder = await Order.create({
       products,
       address,
       totalQty,
       totalPrice,
       paymentMethod,
     });
-
-    await newOrder.save();
 
     res.status(201).json({
       success: true,
@@ -31,3 +29,5 @@ router.post("/api/create", async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
+
+module.exports = router;

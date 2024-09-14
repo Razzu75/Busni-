@@ -1,28 +1,43 @@
-// models/Order.js
-const mongoose = require("mongoose");
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/db");
 
-const orderSchema = new mongoose.Schema({
-  products: [
-    {
-      productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-        required: true,
-      },
-      quantity: { type: Number, required: true },
-      price: { type: Number, required: true },
+const Order = sequelize.define("Order", {
+  products: {
+    type: DataTypes.JSONB, // Using JSONB to store array of objects
+    allowNull: false,
+    validate: {
+      notEmpty: true,
     },
-  ],
-  address: {
-    city: { type: String, required: true },
-    area: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
   },
-  totalQty: { type: Number, required: true },
-  totalPrice: { type: Number, required: true },
-  paymentMethod: { type: String, required: true },
-  orderStatus: { type: String, default: "Pending" },
-  createdAt: { type: Date, default: Date.now },
+  address: {
+    type: DataTypes.JSONB, // Using JSONB to store address object
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  totalQty: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  totalPrice: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  paymentMethod: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  orderStatus: {
+    type: DataTypes.STRING,
+    defaultValue: "Pending",
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+}, {
+  timestamps: false, // Disable automatic timestamps
 });
 
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = Order;

@@ -1,9 +1,9 @@
-const userModel = require("../../models/userModel");
+const User = require("../../models/userModel");
 
 async function userDetailsController(req, res) {
   try {
     console.log("userId", req.userId);
-    const user = await userModel.findById(req.userId);
+    const user = await User.findByPk(req.userId);
 
     res.status(200).json({
       data: user,
