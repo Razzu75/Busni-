@@ -10,9 +10,12 @@ const AdminPanel = () => {
 
 
     useEffect(()=>{
-        if(user?.role !== ROLE.ADMIN){
-            navigate("/")
-        }
+        if(localStorage.getItem("token") === null){
+            navigate("/login")
+        } 
+        // if(user?.role !== ROLE.ADMIN){
+        //     navigate("/")
+        // }
     },[user])
 
   return (
