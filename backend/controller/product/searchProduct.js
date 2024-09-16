@@ -23,6 +23,10 @@ const searchProduct = async (req, res) => {
       }
     });
 
+    product.map((product) => {
+      product.productImage = JSON.parse(product.productImage);
+    });
+
     res.json({
       data: product,
       message: "Search Product list",

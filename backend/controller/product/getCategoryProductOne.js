@@ -11,6 +11,11 @@ const getCategoryProduct = async (req, res) => {
     for (const category of productCategories) {
       const product = await Product.findOne({ where: { category: category.category } });
 
+      // Convert string to JSON
+      if (product) {
+        product.productImage = JSON.parse(product.productImage);
+      }
+
       if (product) {
         productByCategory.push(product);
       }

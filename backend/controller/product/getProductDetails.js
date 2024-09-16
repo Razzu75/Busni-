@@ -6,6 +6,9 @@ const getProductDetails = async (req, res) => {
 
     const product = await Product.findByPk(productId);
 
+    // Convert string to JSON
+    product.productImage = JSON.parse(product.productImage);
+
     res.json({
       data: product,
       message: "Ok",

@@ -25,7 +25,7 @@ async function userSignInController(req, res) {
 
     if (checkPassword) {
       const tokenData = {
-        id: user.id,
+        id: user._id,
         email: user.email,
         phoneno: user.phoneno, // Added phone number to token data
       };

@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
 
 const Product = sequelize.define("product", {
-  productId: {
+  _id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
@@ -37,7 +37,7 @@ const Product = sequelize.define("product", {
   },
   sold: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 }, {
   timestamps: true,

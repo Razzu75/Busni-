@@ -10,7 +10,7 @@ const AddToCart = sequelize.define(
       primaryKey: true,
       references: {
         model: "product",
-        key: "productId",
+        key: "_id",
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
@@ -27,7 +27,7 @@ const AddToCart = sequelize.define(
       allowNull: false,
       references: {
         model: "user",
-        key: "userId",
+        key: "_id",
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',

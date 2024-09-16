@@ -6,6 +6,11 @@ const getProductController = async (req, res) => {
       order: [['createdAt', 'DESC']],
     });
 
+    // Convert string to JSON
+    allProduct.map((product) => {
+      product.productImage = JSON.parse(product.productImage);
+    });
+
     res.json({
       message: "All Products",
       success: true,

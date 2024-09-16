@@ -9,6 +9,8 @@ async function UploadProductController(req, res) {
       throw new Error("Permission denied");
     }
 
+    console.log("req.body", req.body);
+
     const saveProduct = await Product.create(req.body);
 
     res.status(201).json({

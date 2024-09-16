@@ -5,6 +5,11 @@ const getCategoryWiseProduct = async (req, res) => {
     const { category } = req.body || req.query;
     const products = await Product.findAll({ where: { category } });
 
+    // Convert string to JSON
+    products.map((product) => {
+      product.productImage = JSON.parse(product.productImage);
+    });
+
     res.json({
       data: products,
       message: "Product",
