@@ -118,11 +118,11 @@ const Cart = () => {
     const message = `*Your Cart Details:*\n${data
       .map(
         (item) =>
-          `Product: ${item.productId.productName}\nQuantity: ${
+          `Product: ${item.product.productName}\nQuantity: ${
             item.quantity
           }\nPrice: ${displayINRCurrency(
-            item.productId.sellingPrice
-          )}\nImage: ${item.productId.productImage[0]}\n\n`
+            item.sellingPrice
+          )}\nImage: ${item.product.productImage[0]}\n\n`
       )
       .join("")}*Total Price:* ${displayINRCurrency(totalPrice)}`;
 
@@ -137,11 +137,11 @@ const Cart = () => {
     const message = `Your Cart Details:\n${data
       .map(
         (item) =>
-          `Product: ${item.productId.productName}\nQuantity: ${
+          `Product: ${item.product.productName}\nQuantity: ${
             item.quantity
           }\nPrice: ${displayINRCurrency(
-            item.productId.sellingPrice
-          )}\nImage: ${item.productId.productImage[0]}\n\n`
+            item.sellingPrice
+          )}\nImage: ${item.product.productImage[0]}\n\n`
       )
       .join("")}Total Price: ${displayINRCurrency(totalPrice)}`;
     const url = `https://www.messenger.com/t/yourPageID?message=${encodeURIComponent(
@@ -178,12 +178,12 @@ const Cart = () => {
             : data.map((product, index) => {
                 return (
                   <div
-                    key={product?._id + "Add To Cart Loading"}
+                    key={product?.product._id + "Add To Cart Loading"}
                     className="w-full bg-white h-32 my-2 border border-slate-300  rounded grid grid-cols-[128px,1fr]"
                   >
                     <div className="w-32 h-32 bg-slate-200">
                       <img
-                        src={product?.productId?.productImage[0]}
+                        src={product?.product?.productImage[0]}
                         className="w-full h-full object-scale-down mix-blend-multiply"
                       />
                     </div>
@@ -191,24 +191,24 @@ const Cart = () => {
                       {/**delete product */}
                       <div
                         className="absolute right-0 text-red-600 rounded-full p-2 hover:bg-red-600 hover:text-white cursor-pointer"
-                        onClick={() => deleteCartProduct(product?._id)}
+                        onClick={() => deleteCartProduct(product?.id)}
                       >
                         <MdDelete />
                       </div>
 
                       <h2 className="text-lg lg:text-xl text-ellipsis line-clamp-1">
-                        {product?.productId?.productName}
+                        {product?.product?.productName}
                       </h2>
                       <p className="capitalize text-slate-500">
-                        {product?.productId.category}
+                        {product?.product.category}
                       </p>
                       <div className="flex items-center justify-between">
                         <p className="text-red-600 font-medium text-lg">
-                          {displayINRCurrency(product?.productId?.sellingPrice)}
+                          {displayINRCurrency(product?.product?.sellingPrice)}
                         </p>
                         <p className="text-green-600  font-semibold text-lg">
                           {displayINRCurrency(
-                            product?.productId?.sellingPrice * product?.quantity
+                            product?.product?.sellingPrice * product?.quantity
                           )}
                         </p>
                       </div>
@@ -216,7 +216,7 @@ const Cart = () => {
                         <button
                           className="border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded "
                           onClick={() =>
-                            decraseQty(product?._id, product?.quantity)
+                            decraseQty(product?.id, product?.quantity)
                           }
                         >
                           -
@@ -225,7 +225,7 @@ const Cart = () => {
                         <button
                           className="border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded "
                           onClick={() =>
-                            increaseQty(product?._id, product?.quantity)
+                            increaseQty(product?.id, product?.quantity)
                           }
                         >
                           +
