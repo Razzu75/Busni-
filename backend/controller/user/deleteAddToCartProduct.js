@@ -4,6 +4,7 @@ const deleteAddToCartProduct = async (req, res) => {
   try {
     const currentUserId = req.userId;
     const addToCartProductId = req.body._id;
+    console.log("addToCartProductId", addToCartProductId);
 
     const deleteProduct = await CartProduct.destroy({
       where: { id: addToCartProductId },

@@ -4,22 +4,26 @@ const { sequelize } = require("../config/db");
 const AddToCart = sequelize.define(
   "addtocart",
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     productId: {
       type: DataTypes.UUID,
       allowNull: false,
-      primaryKey: true,
       references: {
         model: "product",
         key: "_id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        min: 1, 
+        min: 1,
       },
     },
     userId: {
@@ -29,12 +33,12 @@ const AddToCart = sequelize.define(
         model: "user",
         key: "_id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
     freezeTableName: true,
   }
 );

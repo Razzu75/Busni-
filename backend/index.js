@@ -36,25 +36,25 @@ try {
 }
 
 // Sync database
-const syncModels = async () => {
-  try {
-    // Sync the User table
-    await User.sync({ alter: true });
-    console.log("User table created.");
+// const syncModels = async () => {
+//   try {
+// Sync the User table
+// await User.sync({ alter: true });
+// console.log("User table created.");
 
-    // Sync the Product table
-    await Product.sync({ alter: true });
-    console.log("Product table created.");
+// Sync the Product table
+//     await Product.sync({ alter: true });
+//     console.log("Product table created.");
 
-    // Sync the AddToCart table
-    await AddToCart.sync({ alter: true });
-    console.log("AddToCart table created.");
-  } catch (error) {
-    console.error("Error syncing tables:", error);
-  }
-};
+//     // Sync the AddToCart table
+//     await AddToCart.sync({ alter: true });
+//     console.log("AddToCart table created.");
+//   } catch (error) {
+//     console.error("Error syncing tables:", error);
+//   }
+// };
 
-syncModels();
+// syncModels();
 
 // Use routes
 app.use("/api", router); // Ensure that router is properly configured

@@ -15,6 +15,11 @@ const addToCartViewProduct = async (req, res) => {
       }],
     });
 
+    // Convert string to JSON
+    allProduct.map((product) => {
+      product.product.productImage = JSON.parse(product.product.productImage);
+    });
+
     res.json({
       data: allProduct,
       success: true,
